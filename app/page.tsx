@@ -58,15 +58,19 @@ export default function Page() {
   const retryRef = useRef<number>(0);
 
   useEffect(() => {
-    const fadeOut = window.setTimeout(() => setLabelVisible(false), 3500);
-    const swap = window.setTimeout(() => {
-      setIdleLabel(IDLE_LABEL_SR);
-      setLabelVisible(true);
+    let fadeIn = 0;
+    const interval = window.setInterval(() => {
+      setLabelVisible(false);
+      window.clearTimeout(fadeIn);
+      fadeIn = window.setTimeout(() => {
+        setIdleLabel((current) => (current === IDLE_LABEL_EN ? IDLE_LABEL_SR : IDLE_LABEL_EN));
+        setLabelVisible(true);
+      }, 500);
     }, 4000);
 
     return () => {
-      window.clearTimeout(fadeOut);
-      window.clearTimeout(swap);
+      window.clearInterval(interval);
+      window.clearTimeout(fadeIn);
     };
   }, []);
 
