@@ -4,20 +4,6 @@ import { Mic, PhoneOff } from "lucide-react";
 import Script from "next/script";
 import { useCallback, useEffect, useRef, useState } from "react";
 
-declare namespace JSX {
-  interface IntrinsicElements {
-    "elevenlabs-convai": React.DetailedHTMLProps<
-      React.HTMLAttributes<HTMLElement> & {
-        "agent-id"?: string;
-        variant?: string;
-        placement?: string;
-        dismissible?: string;
-      },
-      HTMLElement
-    >;
-  }
-}
-
 type ConvaiWidget = HTMLElement & {
   startConversation?: () => void;
   endConversation?: () => void;
@@ -171,16 +157,19 @@ export default function Page() {
       </div>
 
       <div className="pointer-events-none hidden opacity-0" aria-hidden="true">
-        <elevenlabs-convai
-          ref={(element) => {
-            widgetRef.current = element as ConvaiWidget | null;
-          }}
-          id="aisky-agent"
-          agent-id={AGENT_ID}
-          variant="compact"
-          placement="bottom-right"
-          dismissible="true"
-        />
+        {
+          // @ts-ignore
+          <elevenlabs-convai
+            ref={(element) => {
+              widgetRef.current = element as ConvaiWidget | null;
+            }}
+            id="aisky-agent"
+            agent-id={AGENT_ID}
+            variant="compact"
+            placement="bottom-right"
+            dismissible="true"
+          />
+        }
       </div>
 
       <Script src="https://elevenlabs.io/convai-widget/index.js" strategy="lazyOnload" />
