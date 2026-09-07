@@ -11,13 +11,16 @@ body {
 }
 
 elevenlabs-convai {
-  position: absolute !important;
-  width: 1px !important;
-  height: 1px !important;
-  overflow: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  clip: rect(0, 0, 0, 0) !important;
+  display: block !important;
+  position: relative !important;
+  right: auto !important;
+  bottom: auto !important;
+  width: 100% !important;
+  min-height: 280px !important;
+  overflow: visible !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+  clip: auto !important;
 }
 
 .ai-perspective {

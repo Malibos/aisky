@@ -156,20 +156,35 @@ export default function Page() {
         </div>
       </div>
 
-      <div className="pointer-events-none hidden opacity-0" aria-hidden="true">
-        {
-          // @ts-ignore
-          <elevenlabs-convai
-            ref={(element) => {
-              widgetRef.current = element as ConvaiWidget | null;
-            }}
-            id="aisky-agent"
-            agent-id={AGENT_ID}
-            variant="compact"
-            placement="bottom-right"
-            dismissible="true"
-          />
+      <div
+        className={
+          isCalling
+            ? "absolute inset-0 z-40 flex items-center justify-center bg-black/50 px-6"
+            : "pointer-events-none invisible absolute inset-0 z-40 flex items-center justify-center opacity-0"
         }
+        aria-hidden={!isCalling}
+      >
+        <div className="w-full max-w-md rounded-3xl border border-white/15 bg-white/10 p-8 text-center backdrop-blur-xl">
+          <p className="text-sm uppercase tracking-[0.22em] text-white/50">AI SKY</p>
+          <h2 className="mt-3 text-2xl font-semibold text-white">Agent głosowy</h2>
+          <div className="relative mt-6 min-h-[280px] w-full">
+            <elevenlabs-convai
+              ref={(element) => {
+                widgetRef.current = element as ConvaiWidget | null;
+              }}
+              id="aisky-agent"
+              agent-id={AGENT_ID}
+              variant="expanded"
+            />
+          </div>
+          <button
+            type="button"
+            onClick={toggleCall}
+            className="mt-8 rounded-full border border-white/20 px-6 py-2 text-sm text-white/80 transition hover:bg-white/10"
+          >
+            Zakończ rozmowę
+          </button>
+        </div>
       </div>
 
       <Script src="https://elevenlabs.io/convai-widget/index.js" strategy="lazyOnload" />
