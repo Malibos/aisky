@@ -20,7 +20,9 @@ function getWidget(ref?: React.RefObject<ConvaiWidget | null>): ConvaiWidget | n
 }
 
 function clickShadowButton(widget: HTMLElement, test: (button: HTMLButtonElement) => boolean) {
-  const buttons = [...(widget.shadowRoot?.querySelectorAll("button") ?? [])] as HTMLButtonElement[];
+  const root = widget.shadowRoot;
+  if (!root) return false;
+  const buttons = [...root.querySelectorAll("button")] as HTMLButtonElement[];
   const match = buttons.find(test);
   match?.click();
   return Boolean(match);
@@ -30,22 +32,15 @@ function labelOf(button: HTMLButtonElement) {
   return `${button.title} ${button.getAttribute("aria-label") ?? ""} ${button.innerText}`.toLowerCase();
 }
 
-function startHiddenWidget(widget: ConvaiWidget) {
-  if (typeof widget.startConversation === "function") {
-    widget.startConversation();
-    return true;
-  }
-
-  clickShadowButton(widget, (button) => /agree|akceptuj/.test(labelOf(button)));
-  return clickShadowButton(widget, (button) => /start (a )?call|begin conversation|rozpocznij/.test(labelOf(button)));
+function clickHiddenStart(widget: ConvaiWidget) {
+  widget.click();
+  return clickShadowButton(widget, (button) =>
+    /start (a )?call|begin conversation|rozpocznij/.test(labelOf(button)),
+  );
 }
 
-function stopHiddenWidget(widget: ConvaiWidget) {
-  if (typeof widget.endConversation === "function") {
-    widget.endConversation();
-    return true;
-  }
-
+function clickHiddenStop(widget: ConvaiWidget) {
+  widget.click();
   return clickShadowButton(widget, (button) =>
     /end (a )?call|end conversation|zakończ|hang/.test(labelOf(button)),
   );
@@ -54,12 +49,25 @@ function stopHiddenWidget(widget: ConvaiWidget) {
 export default function Page() {
   const [isCalling, setIsCalling] = useState(false);
   const widgetRef = useRef<ConvaiWidget | null>(null);
+  const userArmedRef = useRef(false);
   const retryRef = useRef<number>(0);
 
   useEffect(() => {
     let widget: ConvaiWidget | null = null;
-    const onStarted = () => setIsCalling(true);
-    const onEnded = () => setIsCalling(false);
+
+    const onStarted = () => {
+      if (!userArmedRef.current) {
+        const rogue = getWidget(widgetRef);
+        if (rogue) clickHiddenStop(rogue);
+        return;
+      }
+      setIsCalling(true);
+    };
+
+    const onEnded = () => {
+      userArmedRef.current = false;
+      setIsCalling(false);
+    };
 
     const attach = () => {
       widget = getWidget(widgetRef);
@@ -92,25 +100,28 @@ export default function Page() {
     const widget = getWidget(widgetRef);
 
     if (isCalling) {
-      if (widget) stopHiddenWidget(widget);
+      userArmedRef.current = false;
+      if (widget) clickHiddenStop(widget);
       setIsCalling(false);
       return;
     }
 
-    console.log("Inicjalizacja ElevenLabs...");
+    userArmedRef.current = true;
     setIsCalling(true);
 
-    if (widget && startHiddenWidget(widget)) return;
+    const tryStart = (attempt = 0) => {
+      const current = getWidget(widgetRef);
+      if (current && clickHiddenStart(current)) return;
+      if (attempt < 24) {
+        retryRef.current = window.setTimeout(() => tryStart(attempt + 1), 120);
+      }
+    };
 
-    window.clearTimeout(retryRef.current);
-    retryRef.current = window.setTimeout(() => {
-      const late = getWidget(widgetRef);
-      if (late) startHiddenWidget(late);
-    }, 200);
+    tryStart();
   }, [isCalling]);
 
   return (
-    <main className="relative h-screen w-screen overflow-hidden bg-black">
+    <main className="relative z-0 h-screen w-screen overflow-hidden bg-black">
       <video
         autoPlay
         loop
@@ -120,12 +131,12 @@ export default function Page() {
         src="/background.mp4"
       />
 
-      <div className="flex h-full w-full items-center justify-center">
+      <div className="relative z-50 flex h-full w-full items-center justify-center">
         <button
           type="button"
           onClick={toggleCall}
           aria-pressed={isCalling}
-          className="inline-flex items-center gap-3 rounded-full border border-white/20 bg-white/10 px-8 py-4 text-lg tracking-widest text-white shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-md transition-all duration-300 hover:bg-white/20"
+          className="relative z-50 inline-flex cursor-pointer items-center gap-3 rounded-full border border-white/20 bg-white/10 px-8 py-4 text-lg tracking-widest text-white shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-md transition-all duration-300 hover:bg-white/20"
         >
           {isCalling ? (
             <>
@@ -141,7 +152,7 @@ export default function Page() {
         </button>
       </div>
 
-      <div className="pointer-events-none hidden opacity-0" aria-hidden="true">
+      <div className="elevenlabs-host pointer-events-none hidden" aria-hidden="true">
         <elevenlabs-convai
           ref={(element) => {
             widgetRef.current = element as ConvaiWidget | null;
