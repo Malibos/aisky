@@ -46,11 +46,29 @@ function clickHiddenStop(widget: ConvaiWidget) {
   );
 }
 
+const IDLE_LABEL_EN = "Talk to AI";
+const IDLE_LABEL_SR = "Pričaj sa AI";
+
 export default function Page() {
   const [isCalling, setIsCalling] = useState(false);
+  const [idleLabel, setIdleLabel] = useState(IDLE_LABEL_EN);
+  const [labelVisible, setLabelVisible] = useState(true);
   const widgetRef = useRef<ConvaiWidget | null>(null);
   const userArmedRef = useRef(false);
   const retryRef = useRef<number>(0);
+
+  useEffect(() => {
+    const fadeOut = window.setTimeout(() => setLabelVisible(false), 3500);
+    const swap = window.setTimeout(() => {
+      setIdleLabel(IDLE_LABEL_SR);
+      setLabelVisible(true);
+    }, 4000);
+
+    return () => {
+      window.clearTimeout(fadeOut);
+      window.clearTimeout(swap);
+    };
+  }, []);
 
   useEffect(() => {
     let widget: ConvaiWidget | null = null;
@@ -142,12 +160,14 @@ export default function Page() {
         {isCalling ? (
           <>
             <PhoneOff className="h-5 w-5" strokeWidth={2} />
-            Zakończ połączenie
+            <span>Zakończ połączenie</span>
           </>
         ) : (
           <>
             <Mic className="h-5 w-5" strokeWidth={2} />
-            Rozpocznij połączenie
+            <span className={`transition-opacity duration-500 ${labelVisible ? "opacity-100" : "opacity-0"}`}>
+              {idleLabel}
+            </span>
           </>
         )}
       </button>
