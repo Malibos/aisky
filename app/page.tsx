@@ -131,11 +131,13 @@ export default function Page() {
         src="/background.mp4"
       />
 
+      <div className="pointer-events-none absolute bottom-0 left-0 z-[1] h-48 w-full bg-gradient-to-t from-black from-[55%] via-black/80 to-transparent" />
+
       <button
         type="button"
         onClick={toggleCall}
         aria-pressed={isCalling}
-        className="absolute bottom-20 left-1/2 z-10 inline-flex -translate-x-1/2 cursor-pointer items-center gap-3 rounded-full border border-white/20 bg-white/10 px-8 py-4 text-lg tracking-widest text-white shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-md transition-all duration-300 hover:bg-white/20"
+        className="absolute bottom-20 left-1/2 z-20 inline-flex -translate-x-1/2 cursor-pointer items-center gap-3 rounded-full border border-white/20 bg-white/10 px-8 py-4 text-lg tracking-widest text-white shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-md transition-all duration-300 hover:bg-white/20"
       >
         {isCalling ? (
           <>
