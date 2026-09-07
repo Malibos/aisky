@@ -121,22 +121,33 @@ export default function Page() {
   }, [isCalling]);
 
   return (
-    <main className="relative z-0 h-screen w-screen overflow-hidden bg-black">
+    <main className="relative h-screen w-screen overflow-hidden bg-black">
       <video
         autoPlay
         loop
         muted
         playsInline
-        className="absolute inset-0 -z-10 h-full w-full object-cover"
+        className="absolute inset-0 z-0 h-full w-full scale-125 object-cover object-[center_40%] blur-md"
         src="/background.mp4"
       />
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-black/50" />
+      <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[1] h-1/2 bg-gradient-to-t from-black via-black/80 to-transparent" />
 
-      <div className="relative z-50 flex h-full w-full items-center justify-center">
+      <div className="relative z-10 flex min-h-screen flex-col items-center justify-center gap-8 p-4 text-center">
+        <div className="flex flex-col items-center gap-1">
+          <h1 className="text-6xl font-semibold tracking-tight text-white sm:text-7xl md:text-8xl">AI</h1>
+          <p className="text-3xl tracking-[0.4em] text-white/90 sm:text-4xl">SKY</p>
+        </div>
+
+        <h2 className="w-full max-w-4xl whitespace-normal break-words text-2xl font-bold uppercase tracking-wide text-white sm:text-4xl md:text-5xl">
+          BUILDING CONNECTION
+        </h2>
+
         <button
           type="button"
           onClick={toggleCall}
           aria-pressed={isCalling}
-          className="relative z-50 inline-flex cursor-pointer items-center gap-3 rounded-full border border-white/20 bg-white/10 px-8 py-4 text-lg tracking-widest text-white shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-md transition-all duration-300 hover:bg-white/20"
+          className="inline-flex cursor-pointer items-center gap-3 rounded-full border border-white/20 bg-white/10 px-8 py-4 text-lg tracking-widest text-white shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-md transition-all duration-300 hover:bg-white/20"
         >
           {isCalling ? (
             <>
