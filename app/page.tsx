@@ -153,13 +153,13 @@ export default function Page() {
         src="/background.mp4"
       />
 
-      <div className="pointer-events-none absolute bottom-0 left-0 z-[1] h-48 w-full bg-gradient-to-t from-black from-[55%] via-black/80 to-transparent md:h-64 lg:h-[35vh]" />
+      <div className="pointer-events-none absolute bottom-0 left-0 z-[1] h-40 w-full bg-gradient-to-t from-black via-black to-transparent md:h-64 md:from-[55%] md:via-black/80 lg:h-[35vh]" />
 
       <button
         type="button"
         onClick={toggleCall}
         aria-pressed={isCalling}
-        className="absolute bottom-[30%] left-1/2 z-20 inline-flex min-h-12 -translate-x-1/2 cursor-pointer items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3.5 text-base tracking-wide text-white shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-md transition-all duration-300 hover:bg-white/20 sm:gap-3 sm:px-8 sm:py-4 sm:text-lg sm:tracking-widest md:bottom-20"
+        className="absolute bottom-[15%] left-1/2 z-20 inline-flex min-h-12 -translate-x-1/2 cursor-pointer items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3.5 text-base tracking-wide text-white shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-md transition-all duration-300 hover:bg-white/20 sm:gap-3 sm:px-8 sm:py-4 sm:text-lg sm:tracking-widest md:bottom-20"
       >
         {isCalling ? (
           <>
