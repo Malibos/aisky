@@ -154,7 +154,7 @@ export default function Page() {
       />
 
       <div className="pointer-events-none absolute bottom-0 left-0 z-10 h-[25vh] w-full bg-gradient-to-t from-black from-70% to-transparent md:hidden" />
-      <div className="pointer-events-none hidden md:absolute md:bottom-0 md:z-10 md:block md:h-[25vh] md:w-full md:bg-gradient-to-t md:from-black md:via-black/90 md:to-transparent" />
+      <div className="pointer-events-none hidden absolute bottom-0 left-0 z-10 h-[30vh] w-full bg-gradient-to-t from-black from-30% via-black/80 to-transparent md:block" />
 
       <button
         type="button"
