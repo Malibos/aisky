@@ -153,7 +153,7 @@ export default function Page() {
         src="/background.mp4"
       />
 
-      <div className="pointer-events-none absolute bottom-0 left-0 z-10 h-[25vh] w-full bg-gradient-to-t from-black from-70% to-transparent md:h-[35vh] md:bg-gradient-to-t md:from-black md:from-60% md:to-transparent" />
+      <div className="pointer-events-none absolute bottom-0 left-0 z-10 h-[25vh] w-full bg-gradient-to-t from-black from-70% to-transparent md:h-[40vh] md:bg-gradient-to-t md:from-black md:from-80% md:to-transparent" />
 
       <button
         type="button"
