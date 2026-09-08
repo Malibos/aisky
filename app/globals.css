@@ -9,15 +9,3 @@ body {
   overflow: hidden;
   background: #000;
 }
-
-.elevenlabs-host,
-.elevenlabs-host elevenlabs-convai,
-elevenlabs-convai {
-  display: none !important;
-  width: 0 !important;
-  height: 0 !important;
-  overflow: hidden !important;
-  opacity: 0 !important;
-  pointer-events: none !important;
-  visibility: hidden !important;
-}

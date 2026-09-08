@@ -1,65 +1,49 @@
 "use client";
 
+import {
+  ConversationProvider,
+  useConversationControls,
+  useConversationStatus,
+} from "@elevenlabs/react";
 import { Mic, PhoneOff } from "lucide-react";
-import Script from "next/script";
-import { useCallback, useEffect, useRef, useState } from "react";
-
-type ConvaiWidget = HTMLElement & {
-  startConversation?: () => void;
-  endConversation?: () => void;
-};
+import { useEffect, useRef, useState } from "react";
 
 const AGENT_ID = "agent_5801m1sayfz1egzv77pnk3f3tb7b";
-
-function getWidget(ref?: React.RefObject<ConvaiWidget | null>): ConvaiWidget | null {
-  return (
-    ref?.current ??
-    (document.getElementById("aisky-agent") as ConvaiWidget | null) ??
-    (document.querySelector("elevenlabs-convai") as ConvaiWidget | null)
-  );
-}
-
-function clickShadowButton(widget: HTMLElement, test: (button: HTMLButtonElement) => boolean) {
-  const root = widget.shadowRoot;
-  if (!root) return false;
-  const buttons = [...root.querySelectorAll("button")] as HTMLButtonElement[];
-  const match = buttons.find(test);
-  match?.click();
-  return Boolean(match);
-}
-
-function labelOf(button: HTMLButtonElement) {
-  return `${button.title} ${button.getAttribute("aria-label") ?? ""} ${button.innerText}`.toLowerCase();
-}
-
-function clickHiddenStart(widget: ConvaiWidget) {
-  widget.click();
-  return clickShadowButton(widget, (button) =>
-    /start (a )?call|begin conversation|rozpocznij/.test(labelOf(button)),
-  );
-}
-
-function clickHiddenStop(widget: ConvaiWidget) {
-  widget.click();
-  return clickShadowButton(widget, (button) =>
-    /end (a )?call|end conversation|zakończ|hang/.test(labelOf(button)),
-  );
-}
-
 const IDLE_LABEL_EN = "Talk to AI";
 const IDLE_LABEL_SR = "Pri\u010Daj sa AI";
 const IDLE_LABELS = [IDLE_LABEL_EN, IDLE_LABEL_SR] as const;
 
-export default function Page() {
-  const [isCalling, setIsCalling] = useState(false);
+function unlockIosAudio() {
+  try {
+    const AudioCtx =
+      window.AudioContext ||
+      (window as Window & { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    if (!AudioCtx) return;
+    const ctx = new AudioCtx();
+    void ctx.resume();
+    const buffer = ctx.createBuffer(1, 1, 22050);
+    const source = ctx.createBufferSource();
+    source.buffer = buffer;
+    source.connect(ctx.destination);
+    source.start(0);
+  } catch {
+    // Safari may reject unlock before the mic prompt; startSession still runs.
+  }
+}
+
+function GlassCta() {
+  const { startSession, endSession, setVolume } = useConversationControls();
+  const { status } = useConversationStatus();
+  const live = status === "connected" || status === "connecting";
+  const [armed, setArmed] = useState(false);
   const [labelIndex, setLabelIndex] = useState(0);
   const [labelVisible, setLabelVisible] = useState(true);
-  const widgetRef = useRef<ConvaiWidget | null>(null);
-  const userArmedRef = useRef(false);
-  const retryRef = useRef<number>(0);
+  const showHangup = live || armed;
+  const hangupRef = useRef(showHangup);
+  hangupRef.current = showHangup;
 
   useEffect(() => {
-    if (isCalling) {
+    if (showHangup) {
       setLabelVisible(true);
       return;
     }
@@ -78,122 +62,74 @@ export default function Page() {
       window.clearInterval(interval);
       window.clearTimeout(fadeIn);
     };
-  }, [isCalling]);
+  }, [showHangup]);
 
   useEffect(() => {
-    let widget: ConvaiWidget | null = null;
-
-    const onStarted = () => {
-      if (!userArmedRef.current) {
-        const rogue = getWidget(widgetRef);
-        if (rogue) clickHiddenStop(rogue);
-        return;
-      }
-      setIsCalling(true);
-    };
-
-    const onEnded = () => {
-      userArmedRef.current = false;
-      setIsCalling(false);
-    };
-
-    const attach = () => {
-      widget = getWidget(widgetRef);
-      if (!widget) return false;
-      widget.addEventListener("conversationStarted", onStarted);
-      widget.addEventListener("conversationEnded", onEnded);
-      return true;
-    };
-
-    if (attach()) {
-      return () => {
-        widget?.removeEventListener("conversationStarted", onStarted);
-        widget?.removeEventListener("conversationEnded", onEnded);
-      };
+    if (status === "connected") {
+      setVolume({ volume: 1 });
     }
+    if (status === "disconnected" || status === "error") {
+      setArmed(false);
+    }
+  }, [setVolume, status]);
 
-    const timer = window.setInterval(() => {
-      if (attach()) window.clearInterval(timer);
-    }, 200);
-
-    return () => {
-      window.clearInterval(timer);
-      window.clearTimeout(retryRef.current);
-      widget?.removeEventListener("conversationStarted", onStarted);
-      widget?.removeEventListener("conversationEnded", onEnded);
-    };
-  }, []);
-
-  const toggleCall = useCallback(() => {
-    const widget = getWidget(widgetRef);
-
-    if (isCalling) {
-      userArmedRef.current = false;
-      if (widget) clickHiddenStop(widget);
-      setIsCalling(false);
+  const onClick = () => {
+    if (hangupRef.current) {
+      setArmed(false);
+      endSession();
       return;
     }
 
-    userArmedRef.current = true;
-    setIsCalling(true);
-
-    const tryStart = (attempt = 0) => {
-      const current = getWidget(widgetRef);
-      if (current && clickHiddenStart(current)) return;
-      if (attempt < 24) {
-        retryRef.current = window.setTimeout(() => tryStart(attempt + 1), 120);
-      }
-    };
-
-    tryStart();
-  }, [isCalling]);
+    unlockIosAudio();
+    void navigator.mediaDevices.getUserMedia({ audio: true }).catch(() => {
+      setArmed(false);
+    });
+    startSession({
+      agentId: AGENT_ID,
+      connectionType: "webrtc",
+      webRtc: { singlePeerConnection: false },
+    });
+    setArmed(true);
+  };
 
   return (
-    <main className="relative h-[100dvh] min-h-[100dvh] w-full overflow-hidden bg-black">
-      <video
-        autoPlay
-        loop
-        muted
-        playsInline
-        className="absolute inset-0 z-0 h-full w-full object-cover"
-        src="/background.mp4"
-      />
+    <button
+      type="button"
+      onClick={onClick}
+      aria-pressed={showHangup}
+      className="absolute bottom-12 left-1/2 z-20 inline-flex min-h-12 -translate-x-1/2 transform cursor-pointer items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3.5 text-base tracking-wide text-white shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-md transition-all duration-300 hover:bg-white/20 sm:gap-3 sm:px-8 sm:py-4 sm:text-lg sm:tracking-widest"
+    >
+      {showHangup ? (
+        <>
+          <PhoneOff className="h-5 w-5" strokeWidth={2} />
+          <span>Zakończ połączenie</span>
+        </>
+      ) : (
+        <>
+          <Mic className="h-5 w-5" strokeWidth={2} />
+          <span className={`transition-opacity duration-500 ${labelVisible ? "opacity-100" : "opacity-0"}`}>
+            {IDLE_LABELS[labelIndex]}
+          </span>
+        </>
+      )}
+    </button>
+  );
+}
 
-      <button
-        type="button"
-        onClick={toggleCall}
-        aria-pressed={isCalling}
-        className="absolute bottom-12 left-1/2 z-20 inline-flex min-h-12 -translate-x-1/2 transform cursor-pointer items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3.5 text-base tracking-wide text-white shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-md transition-all duration-300 hover:bg-white/20 sm:gap-3 sm:px-8 sm:py-4 sm:text-lg sm:tracking-widest"
-      >
-        {isCalling ? (
-          <>
-            <PhoneOff className="h-5 w-5" strokeWidth={2} />
-            <span>Zakończ połączenie</span>
-          </>
-        ) : (
-          <>
-            <Mic className="h-5 w-5" strokeWidth={2} />
-            <span className={`transition-opacity duration-500 ${labelVisible ? "opacity-100" : "opacity-0"}`}>
-              {IDLE_LABELS[labelIndex]}
-            </span>
-          </>
-        )}
-      </button>
-
-      <div className="elevenlabs-host pointer-events-none hidden" aria-hidden="true">
-        <elevenlabs-convai
-          ref={(element) => {
-            widgetRef.current = element as ConvaiWidget | null;
-          }}
-          id="aisky-agent"
-          agent-id={AGENT_ID}
-          variant="compact"
-          placement="bottom-right"
-          dismissible="true"
+export default function Page() {
+  return (
+    <ConversationProvider>
+      <main className="relative h-[100dvh] min-h-[100dvh] w-full overflow-hidden bg-black">
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="absolute inset-0 z-0 h-full w-full object-cover"
+          src="/background.mp4"
         />
-      </div>
-
-      <Script src="https://elevenlabs.io/convai-widget/index.js" strategy="lazyOnload" />
-    </main>
+        <GlassCta />
+      </main>
+    </ConversationProvider>
   );
 }
