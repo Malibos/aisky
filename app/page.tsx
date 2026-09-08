@@ -48,22 +48,28 @@ function clickHiddenStop(widget: ConvaiWidget) {
 
 const IDLE_LABEL_EN = "Talk to AI";
 const IDLE_LABEL_SR = "Pri\u010Daj sa AI";
+const IDLE_LABELS = [IDLE_LABEL_EN, IDLE_LABEL_SR] as const;
 
 export default function Page() {
   const [isCalling, setIsCalling] = useState(false);
-  const [idleLabel, setIdleLabel] = useState(IDLE_LABEL_EN);
+  const [labelIndex, setLabelIndex] = useState(0);
   const [labelVisible, setLabelVisible] = useState(true);
   const widgetRef = useRef<ConvaiWidget | null>(null);
   const userArmedRef = useRef(false);
   const retryRef = useRef<number>(0);
 
   useEffect(() => {
+    if (isCalling) {
+      setLabelVisible(true);
+      return;
+    }
+
     let fadeIn = 0;
     const interval = window.setInterval(() => {
       setLabelVisible(false);
       window.clearTimeout(fadeIn);
       fadeIn = window.setTimeout(() => {
-        setIdleLabel((current) => (current === IDLE_LABEL_EN ? IDLE_LABEL_SR : IDLE_LABEL_EN));
+        setLabelIndex((index) => (index === 0 ? 1 : 0));
         setLabelVisible(true);
       }, 500);
     }, 4000);
@@ -72,7 +78,7 @@ export default function Page() {
       window.clearInterval(interval);
       window.clearTimeout(fadeIn);
     };
-  }, []);
+  }, [isCalling]);
 
   useEffect(() => {
     let widget: ConvaiWidget | null = null;
@@ -153,14 +159,11 @@ export default function Page() {
         src="/background.mp4"
       />
 
-      <div className="pointer-events-none absolute bottom-0 left-0 z-10 h-[25vh] w-full bg-gradient-to-t from-black from-70% to-transparent md:hidden" />
-      <div className="pointer-events-none hidden absolute bottom-0 left-0 z-10 h-[30vh] w-full bg-gradient-to-t from-black from-30% via-black/80 to-transparent md:block" />
-
       <button
         type="button"
         onClick={toggleCall}
         aria-pressed={isCalling}
-        className="absolute bottom-[12vh] left-1/2 z-20 inline-flex min-h-12 -translate-x-1/2 cursor-pointer items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3.5 text-base tracking-wide text-white shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-md transition-all duration-300 hover:bg-white/20 sm:gap-3 sm:px-8 sm:py-4 sm:text-lg sm:tracking-widest md:bottom-20"
+        className="absolute bottom-12 left-1/2 z-20 inline-flex min-h-12 -translate-x-1/2 transform cursor-pointer items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3.5 text-base tracking-wide text-white shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-md transition-all duration-300 hover:bg-white/20 sm:gap-3 sm:px-8 sm:py-4 sm:text-lg sm:tracking-widest"
       >
         {isCalling ? (
           <>
@@ -171,7 +174,7 @@ export default function Page() {
           <>
             <Mic className="h-5 w-5" strokeWidth={2} />
             <span className={`transition-opacity duration-500 ${labelVisible ? "opacity-100" : "opacity-0"}`}>
-              {idleLabel}
+              {IDLE_LABELS[labelIndex]}
             </span>
           </>
         )}
