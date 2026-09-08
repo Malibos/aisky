@@ -153,34 +153,29 @@ export default function Page() {
         src="/background.mp4"
       />
 
-      <div className="pointer-events-none absolute bottom-0 left-0 z-10 h-[25vh] w-full bg-gradient-to-t from-black from-70% to-transparent md:h-48 md:from-black md:from-0% md:to-transparent" />
+      <div className="pointer-events-none absolute bottom-0 left-0 z-10 h-[25vh] w-full bg-gradient-to-t from-black from-70% to-transparent md:hidden" />
+      <div className="pointer-events-none hidden md:absolute md:bottom-0 md:z-10 md:block md:h-[25vh] md:w-full md:bg-gradient-to-t md:from-black md:via-black/90 md:to-transparent" />
 
-      <div className="absolute bottom-[12vh] left-1/2 z-20 -translate-x-1/2 md:bottom-20">
-        <div
-          aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 z-10 hidden h-28 w-96 -translate-x-1/2 translate-y-[calc(-50%+1rem)] rounded-full bg-black blur-xl md:block"
-        />
-        <button
-          type="button"
-          onClick={toggleCall}
-          aria-pressed={isCalling}
-          className="relative z-20 inline-flex min-h-12 cursor-pointer items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3.5 text-base tracking-wide text-white shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-md transition-all duration-300 hover:bg-white/20 sm:gap-3 sm:px-8 sm:py-4 sm:text-lg sm:tracking-widest"
-        >
-          {isCalling ? (
-            <>
-              <PhoneOff className="h-5 w-5" strokeWidth={2} />
-              <span>Zakończ połączenie</span>
-            </>
-          ) : (
-            <>
-              <Mic className="h-5 w-5" strokeWidth={2} />
-              <span className={`transition-opacity duration-500 ${labelVisible ? "opacity-100" : "opacity-0"}`}>
-                {idleLabel}
-              </span>
-            </>
-          )}
-        </button>
-      </div>
+      <button
+        type="button"
+        onClick={toggleCall}
+        aria-pressed={isCalling}
+        className="absolute bottom-[12vh] left-1/2 z-20 inline-flex min-h-12 -translate-x-1/2 cursor-pointer items-center gap-2 rounded-full border border-white/20 bg-white/10 px-6 py-3.5 text-base tracking-wide text-white shadow-[0_8px_32px_0_rgba(31,38,135,0.37)] backdrop-blur-md transition-all duration-300 hover:bg-white/20 sm:gap-3 sm:px-8 sm:py-4 sm:text-lg sm:tracking-widest md:bottom-20"
+      >
+        {isCalling ? (
+          <>
+            <PhoneOff className="h-5 w-5" strokeWidth={2} />
+            <span>Zakończ połączenie</span>
+          </>
+        ) : (
+          <>
+            <Mic className="h-5 w-5" strokeWidth={2} />
+            <span className={`transition-opacity duration-500 ${labelVisible ? "opacity-100" : "opacity-0"}`}>
+              {idleLabel}
+            </span>
+          </>
+        )}
+      </button>
 
       <div className="elevenlabs-host pointer-events-none hidden" aria-hidden="true">
         <elevenlabs-convai
