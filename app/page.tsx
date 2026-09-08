@@ -47,7 +47,7 @@ function clickHiddenStop(widget: ConvaiWidget) {
 }
 
 const IDLE_LABEL_EN = "Talk to AI";
-const IDLE_LABEL_SR = "Pričaj sa AI";
+const IDLE_LABEL_SR = "Pri\u010Daj sa AI";
 
 export default function Page() {
   const [isCalling, setIsCalling] = useState(false);
@@ -158,7 +158,7 @@ export default function Page() {
       <div className="absolute bottom-[12vh] left-1/2 z-20 -translate-x-1/2 md:bottom-20">
         <div
           aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 z-10 hidden h-24 w-80 -translate-x-1/2 translate-y-[calc(-50%+1.5rem)] rounded-full bg-black blur-xl md:block"
+          className="pointer-events-none absolute left-1/2 top-1/2 z-10 hidden h-28 w-96 -translate-x-1/2 translate-y-[calc(-50%+1rem)] rounded-full bg-black blur-xl md:block"
         />
         <button
           type="button"
