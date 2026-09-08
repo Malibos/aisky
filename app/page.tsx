@@ -158,7 +158,7 @@ export default function Page() {
       <div className="absolute bottom-[12vh] left-1/2 z-20 -translate-x-1/2 md:bottom-20">
         <div
           aria-hidden
-          className="pointer-events-none absolute left-1/2 top-1/2 z-10 hidden h-[calc(100%+2cm)] w-[calc(100%+2cm)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-black blur-md md:block"
+          className="pointer-events-none absolute left-1/2 top-1/2 z-10 hidden h-24 w-80 -translate-x-1/2 translate-y-[calc(-50%+1.5rem)] rounded-full bg-black blur-xl md:block"
         />
         <button
           type="button"
