@@ -1,6 +1,8 @@
 import type { MetadataRoute } from "next";
 import { CITY_PAGES, SERVICE_PAGES, SITE_URL } from "@/lib/seo.config";
 
+export const dynamic = "force-static";
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   const home = { url: SITE_URL, lastModified: now, changeFrequency: "weekly" as const, priority: 1 };

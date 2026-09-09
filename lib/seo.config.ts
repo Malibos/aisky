@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const SITE_NAME = "AI SKY";
-export const SITE_URL = "https://aisky.me";
+export const SITE_URL = (process.env.NEXT_PUBLIC_SITE_URL || "https://aisky.me").replace(/\/+$/, "");
 export const SITE_LOCALE = "sr-Latn-ME";
 export const OG_LOCALE = "sr_ME";
 
