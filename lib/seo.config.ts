@@ -10,18 +10,18 @@ export const NAP = {
   legalName: "AI SKY",
   tagline: "Umjetna inteligencija i digitalna rješenja za firme u Crnoj Gori",
   email: "kontakt@aisky.me",
-  streetAddress: "",
-  addressLocality: "Podgorica",
-  addressRegion: "Podgorica",
-  postalCode: "81000",
+  streetAddress: "Dobra Voda",
+  addressLocality: "Dobra Voda",
+  addressRegion: "Bar",
+  postalCode: "85000",
   addressCountry: "ME",
   addressCountryName: "Crna Gora",
-  geo: { latitude: 42.441, longitude: 19.2629 },
+  geo: { latitude: 42.115, longitude: 19.088 },
 } as const;
 
 export const GEO_META = {
   "geo.region": "ME",
-  "geo.placename": "Podgorica",
+  "geo.placename": "Dobra Voda",
   "geo.position": `${NAP.geo.latitude};${NAP.geo.longitude}`,
   ICBM: `${NAP.geo.latitude}, ${NAP.geo.longitude}`,
 } as const;
@@ -47,14 +47,14 @@ export const SERVICE_PAGES = [
 
 export const CITY_PAGES = [
   {
-    slug: "podgorica",
-    path: "/crna-gora/podgorica",
-    name: "Podgorica",
-    title: "AI za firme i institucije u Podgorici | AI SKY",
-    heading: "Umjetna inteligencija za B2B i administraciju u Podgorici",
+    slug: "bar",
+    path: "/crna-gora/bar",
+    name: "Bar",
+    title: "AI za B2B, Luku Bar i špediciju | AI SKY",
+    heading: "Umjetna inteligencija za B2B, Luku Bar i špediciju",
     description:
-      "AI SKY pomaže firmama, kancelarijama i institucijama u Podgorici da uvedu AI u dokumente, podršku i interne procese.",
-    focus: "administracija i B2B",
+      "Iz Dobre Vode radimo sa kancelarijama, trgovinom i Lukom Bar: dokumenti, podrška, špedicija i logistika bez izmišljenih statusa.",
+    focus: "B2B, administracija i luka",
   },
   {
     slug: "budva",
@@ -87,14 +87,14 @@ export const CITY_PAGES = [
     focus: "marina i nautika",
   },
   {
-    slug: "bar",
-    path: "/crna-gora/bar",
-    name: "Bar",
-    title: "AI za luku, logistiku i trgovinu u Baru | AI SKY",
-    heading: "AI za Luku Bar, špediciju i trgovinu",
+    slug: "herceg-novi",
+    path: "/crna-gora/herceg-novi",
+    name: "Herceg Novi",
+    title: "AI za Boku, Igalo i smještaj u Herceg Novom | AI SKY",
+    heading: "AI za wellness, granicu i smještaj u Herceg Novom",
     description:
-      "Bar je kapija za teret i trajekte. AI SKY uvodi asistente i automatizaciju u logistiku, carinu i B2B komunikaciju.",
-    focus: "luka i logistika",
+      "Herceg Novi nije Budva ni Kotor: Igalo, Stari grad i gosti sa granice. AI SKY podešava asistente na taj ritam Boke.",
+    focus: "Boka, wellness i granica",
   },
 ] as const;
 
@@ -102,11 +102,11 @@ export const NAV_LINKS = [
   { href: "/", label: "Početna" },
   { href: "/usluge/ai-implementacija", label: "AI implementacija" },
   { href: "/usluge/ai-asistent", label: "AI asistent" },
-  { href: "/crna-gora/podgorica", label: "Podgorica" },
+  { href: "/crna-gora/bar", label: "Bar" },
   { href: "/crna-gora/budva", label: "Budva" },
   { href: "/crna-gora/kotor", label: "Kotor" },
   { href: "/crna-gora/tivat", label: "Tivat" },
-  { href: "/crna-gora/bar", label: "Bar" },
+  { href: "/crna-gora/herceg-novi", label: "Herceg Novi" },
 ] as const;
 
 export function absoluteUrl(path: string) {

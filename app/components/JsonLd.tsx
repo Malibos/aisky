@@ -31,6 +31,7 @@ export function JsonLd({ extra = [] }: JsonLdProps) {
     parentOrganization: { "@id": `${SITE_URL}/#organization` },
     address: {
       "@type": "PostalAddress",
+      streetAddress: NAP.streetAddress,
       addressLocality: NAP.addressLocality,
       addressRegion: NAP.addressRegion,
       postalCode: NAP.postalCode,

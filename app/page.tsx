@@ -7,7 +7,7 @@ import { buildMetadata, SITE_NAME } from "@/lib/seo.config";
 export const metadata: Metadata = buildMetadata({
   title: `${SITE_NAME} | Umjetna inteligencija i digitalna rješenja za firme u Crnoj Gori`,
   description:
-    "AI SKY uvodi umjetnu inteligenciju i digitalna rješenja za firme u Crnoj Gori: implementacija, AI asistent, Podgorica, Budva, Kotor, Tivat i Bar.",
+    "AI SKY uvodi umjetnu inteligenciju i digitalna rješenja za firme u Crnoj Gori: implementacija, AI asistent, Bar, Budva, Kotor, Tivat i Herceg Novi.",
   path: "/",
 });
 

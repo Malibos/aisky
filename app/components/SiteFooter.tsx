@@ -12,7 +12,7 @@ export function SiteFooter() {
         <address className="not-italic">
           <p className="text-white">{NAP.name}</p>
           <p>
-            {NAP.postalCode} {NAP.addressLocality}
+            {NAP.addressLocality}, {NAP.postalCode} {NAP.addressRegion}
           </p>
           <p>{NAP.addressCountryName}</p>
           <p>

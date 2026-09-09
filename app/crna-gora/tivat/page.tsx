@@ -43,7 +43,7 @@ export default function TivatPage() {
           </Link>{" "}
           ako vam treba javni glasovni sloj, ili implementaciju ako marina software mora da ostane izvor istine.
         </p>
-        <p>Kontakt u footeru je uvijek AI SKY, Podgorica, Crna Gora — isti NAP na cijelom sajtu.</p>
+        <p>Kontakt u footeru je uvijek AI SKY, Dobra Voda, 85000 Bar, Crna Gora — isti NAP na cijelom sajtu.</p>
       </Article>
     </PageShell>
   );

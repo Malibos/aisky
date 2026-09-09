@@ -44,7 +44,7 @@ export default function KotorPage() {
           , ne kozmetika na sajtu.
         </p>
         <p>
-          NAP ostaje AI SKY u Podgorici — lokalni partner, ne call centar iz inostranstva koji ne zna šta je škver.
+          NAP ostaje AI SKY u Dobroj Vodi — lokalni partner, ne call centar iz inostranstva koji ne zna šta je škver.
         </p>
       </Article>
     </PageShell>

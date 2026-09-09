@@ -36,7 +36,7 @@ export default function AiAsistentPage() {
         <p>
           Smije: radno vrijeme, lokacija, jezici, opšti opis usluge, prikupljanje imena i telefona. Ne smije: izmisliti
           slobodan apartman, obećati cijenu koje nema u sistemu, dati medicinski ili pravni savjet. Za hotele to znači
-          vezu ka kalendaru ili jasnu rečenicu „provjeravam sa recepcijom“. Za B2B u Podgorici to znači da ne potpisuje
+          vezu ka kalendaru ili jasnu rečenicu „provjeravam sa recepcijom“. Za B2B u Baru to znači da ne potpisuje
           rok isporuke umjesto vas.
         </p>
         <h2 className="text-2xl font-medium text-white">Kako se uklapa u implementaciju</h2>
@@ -50,7 +50,7 @@ export default function AiAsistentPage() {
           leadova nego cijeli februar.
         </p>
         <p>
-          Kontakt je uvijek isti: AI SKY, Podgorica, Crna Gora, email iz podnožja. Možete početi glasom na početnoj
+          Kontakt je uvijek isti: AI SKY, Dobra Voda, 85000 Bar, Crna Gora, email iz podnožja. Možete početi glasom na početnoj
           stranici i kasnije preći na brendiranog agenta.
         </p>
       </Article>

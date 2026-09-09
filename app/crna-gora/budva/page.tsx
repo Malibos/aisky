@@ -45,7 +45,7 @@ export default function BudvaPage() {
           <Link className="text-white underline decoration-white/30 underline-offset-4" href="/usluge/ai-asistent">
             stranica o AI asistentu
           </Link>
-          . Kontakt podaci u footeru su uvijek AI SKY, Podgorica, Crna Gora.
+          . Kontakt podaci u footeru su uvijek AI SKY, Dobra Voda, 85000 Bar, Crna Gora.
         </p>
       </Article>
     </PageShell>

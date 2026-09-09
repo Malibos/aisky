@@ -25,7 +25,7 @@ export default function AiImplementacijaPage() {
         <h2 className="text-2xl font-medium text-white">Od čega krećemo</h2>
         <p>
           Prvo mapiramo gdje čovjek gubi vrijeme, ne gdje je AI „uzbudljiv“. U računovodstvenoj kancelariji u
-          Podgorici to može biti sortiranje PDF-ova. U hotelu to može biti prepisivanje upita sa Instagrama u PMS. U
+          Dobroj Vodi to može biti sortiranje PDF-ova. U hotelu to može biti prepisivanje upita sa Instagrama u PMS. U
           špediciji u Baru to može biti status pošiljke koji klijent traži peti put istog dana. Svaki od tih slučajeva
           traži drugi izvor podataka i drugi prag greške.
         </p>

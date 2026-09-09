@@ -10,12 +10,12 @@ export function HomeSeoArticle() {
       <p>
         AI SKY je tim koji uvodi umjetnu inteligenciju u stvaran rad crnogorskih firmi. Ne prodajemo apstraktne
         prezentacije. Gradimo asistente, tokove i integracije koje odgovaraju na pozive, poruke i dokumente dok
-        vaš tim radi sa gostima, klijentima ili teretom. Sjedište i prva tačka kontakta su u Podgorici, a projekti
-        pokrivaju obalu i unutrašnjost: Budvu, Kotor, Tivat, Bar i šire.
+        vaš tim radi sa gostima, klijentima ili teretom. Sjedište i prva tačka kontakta su u Dobroj Vodi, a projekti
+        pokrivaju crnogorsko primorje: Bar, Budvu, Kotor, Tivat, Herceg Novi i šire.
       </p>
       <p>
         Crna Gora je malo tržište sa visokim sezonskim špicama. Hotel u Budvi za tri ljetnja mjeseca primi više
-        upita nego zimi za cijelu godinu. Luka Bar živi u ritmu brodova i dokumentacije. Kancelarija u Podgorici
+        upita nego zimi za cijelu godinu. Luka Bar živi u ritmu brodova i dokumentacije. Kancelarija u Dobroj Vodi
         mora da prati zakone, fakture i klijente koji pišu na crnogorskom, srpskom i engleskom. Zato AI ovdje nije
         „modni dodatak“, nego način da isti broj ljudi iznese veći obim posla bez gubitka tona brenda.
       </p>
@@ -32,7 +32,7 @@ export function HomeSeoArticle() {
       </p>
       <p>
         Posebno pazimo na jezik. Gost u hotelu očekuje odgovor na crnogorskom ili engleskom, ne na mješavini. B2B
-        klijent u Podgorici očekuje precizan termin, PIB i rok, ne liriku. Asistent koji „halucinira“ cijenu noćenja
+        klijent u Baru očekuje precizan termin, PIB i rok, ne liriku. Asistent koji „halucinira“ cijenu noćenja
         ili broj bertha u luci skuplje košta od toga da ga uopšte nemate. Zato uvodimo granice: šta smije da kaže,
         kada predaje čovjeku, i kako se loguje razgovor.
       </p>
@@ -56,11 +56,10 @@ export function HomeSeoArticle() {
       <h2 className="pt-4 text-2xl font-medium text-white">Gdje nas koriste u Crnoj Gori</h2>
       <p>
         U{" "}
-        <Link className="text-white underline decoration-white/30 underline-offset-4" href="/crna-gora/podgorica">
-          Podgorici
+        <Link className="text-white underline decoration-white/30 underline-offset-4" href="/crna-gora/bar">
+          Baru
         </Link>{" "}
-        fokus je na kancelarijama, uslugama i administrativnim tokovima: predračuni, upiti, interni wiki. Na obali
-        problem je sezona.{" "}
+        sjedište je u Dobroj Vodi, a fokus na kancelarijama, administraciji i luci: predračuni, upiti, status tereta.{" "}
         <Link className="text-white underline decoration-white/30 underline-offset-4" href="/crna-gora/budva">
           Budva
         </Link>{" "}
@@ -73,10 +72,10 @@ export function HomeSeoArticle() {
           Tivat
         </Link>{" "}
         živi od marine i premium gosta koji očekuje odgovor u minutama.{" "}
-        <Link className="text-white underline decoration-white/30 underline-offset-4" href="/crna-gora/bar">
-          Bar
+        <Link className="text-white underline decoration-white/30 underline-offset-4" href="/crna-gora/herceg-novi">
+          Herceg Novi
         </Link>{" "}
-        treba jasnoću oko tereta, terminala i B2B komunikacije sa špediterima.
+        ima drugi ritam Boke: Igalo, granica i duži boravak, ne noćni špic Budve.
       </p>
       <p>
         Svaki od tih gradova ima drugi ritam i drugi skup grešaka koje AI ne smije da napravi. Zato ne radimo jednu
@@ -97,7 +96,7 @@ export function HomeSeoArticle() {
         lokaciju i pravilo otkazivanja.
       </p>
       <p>
-        AI SKY ostaje lokalni partner: Podgorica kao adresa, Crna Gora kao tržište, obala kao sezonski stres-test.
+        AI SKY ostaje lokalni partner: Dobra Voda kao adresa, Crna Gora kao tržište, obala kao sezonski stres-test.
         Kad uđete u sezonu, sistem mora da izdrži. Kad sezona padne, ne smije da postane mrtav trošak. Zato mjerimo
         odgovore, predaje čovjeku i vrijeme do prve korisne akcije, ne broj „sviđanja“ na demo snimku.
       </p>
