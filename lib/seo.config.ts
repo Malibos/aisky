@@ -9,7 +9,7 @@ export const NAP = {
   name: SITE_NAME,
   legalName: "AI SKY",
   tagline: "Umjetna inteligencija i digitalna rješenja za firme u Crnoj Gori",
-  email: "kontakt@aisky.me",
+  email: "hello@aisky.me",
   streetAddress: "Dobra Voda",
   addressLocality: "Dobra Voda",
   addressRegion: "Bar",
